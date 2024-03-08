@@ -1,0 +1,176 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Design</title>
+    <style>
+        /* Add your CSS styles here */
+        #room-design {
+            width: 600px;
+            height: 400px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+        .furniture {
+            position: absolute;
+        }
+        .furniture img {
+            width: 150px; /* Set the width of the image */
+            height: auto; /* Let the height adjust automatically */
+        }
+        #cart {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        #cart-items {
+            list-style-type: none;
+            padding: 0;
+        }
+        #cart-items li {
+            margin-bottom: 10px;
+        }
+        .buy-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .remove-button {
+            background-color: #f44336; /* Red */
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin-left: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select a room to design</h1>
+    <select id="room-select">
+        <option value="living-room">Living Room</option>
+        <option value="bathroom">Bathroom</option>
+        <option value="bedroom">Bedroom</option>
+        <!-- Add more room options as needed -->
+    </select>
+
+    <h2>Select furniture</h2>
+    <select id="furniture-select">
+        <!-- Options will be dynamically added based on the selected room -->
+    </select>
+
+    <div id="furniture-details"></div>
+
+    <button id="add-to-cart">Add to Cart</button>
+
+    <!-- Cart section -->
+    <div id="cart">
+        <h2>Cart</h2>
+        <ul id="cart-items"></ul>
+        <p>Total: <span id="cart-total"></span></p>
+        <button class="buy-button" onclick="buyItems()">Buy Items</button>
+    </div>
+
+    <!-- Sofa image -->
+    <img src="{% static 'images/sofa.jpg' %}" alt="Sofa" class="furniture" id="sofa" style="display: none;" data-rate="500">
+    <!-- Dresser image -->
+    <img src="{% static 'images/dresser.jpg' %}" alt="Dresser" class="furniture" id="dresser" style="display: none;" data-rate="300">
+    <!-- Nightstand image -->
+    <img src="{% static 'images/nightstand.jpg' %}" alt="Nightstand" class="furniture" id="nightstand" style="display: none;" data-rate="100">
+
+    <script>
+        const roomSelect = document.getElementById('room-select');
+        const furnitureSelect = document.getElementById('furniture-select');
+        const furnitureDetails = document.getElementById('furniture-details');
+        const addToCartButton = document.getElementById('add-to-cart');
+        const cartItemsList = document.getElementById('cart-items');
+        const cartTotalElement = document.getElementById('cart-total');
+
+        let cartItems = [];
+
+        function populateFurnitureOptions() {
+            const selectedRoom = roomSelect.value;
+            furnitureSelect.innerHTML = '';
+            furnitureOptions[selectedRoom].forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                furnitureSelect.appendChild(optionElement);
+            });
+        }
+
+        function showFurnitureDetails() {
+            const selectedFurniture = furnitureSelect.value;
+            const selectedImage = document.getElementById(selectedFurniture);
+            let selectedRate = selectedImage.getAttribute('data-rate');
+            if (!selectedRate) {
+                selectedRate = 'Rate not available';
+            }
+            furnitureDetails.innerHTML = `<img src="${selectedImage.src}" alt="${selectedFurniture}" width="150" height="auto">
+                <p>${selectedRate}</p>`;
+        }
+
+        function addToCart() {
+            const selectedFurniture = furnitureSelect.value;
+            const selectedImage = document.getElementById(selectedFurniture);
+            const selectedRate = parseFloat(selectedImage.getAttribute('data-rate'));
+            cartItems.push({ name: selectedFurniture, rate: selectedRate });
+            renderCart();
+        }
+
+        function removeFromCart(index) {
+            cartItems.splice(index, 1);
+            renderCart();
+        }
+
+        function renderCart() {
+            cartItemsList.innerHTML = '';
+            let total = 0;
+            cartItems.forEach((item, index) => {
+                const cartItem = document.createElement('li');
+                cartItem.innerHTML = `
+                    <img src="${selectedImage.src}" alt="${selectedFurniture}" width="50" height="auto">
+                    <p>${item.name} - $${item.rate} <button class="remove-button" onclick="removeFromCart(${index})">Remove</button></p>`;
+                cartItemsList.appendChild(cartItem);
+                total += item.rate;
+            });
+            const discountedTotal = total * 0.9;
+            cartTotalElement.textContent = `$${discountedTotal.toFixed(2)}`;
+        }
+
+        function buyItems() {
+            // Placeholder for buying items
+            alert('Items bought!');
+        }
+
+        roomSelect.addEventListener('change', () => {
+            populateFurnitureOptions();
+            showFurnitureDetails();
+        });
+
+        furnitureSelect.addEventListener('change', showFurnitureDetails);
+
+        addToCartButton.addEventListener('click', addToCart);
+
+        populateFurnitureOptions();
+        showFurnitureDetails();
+    </script>
+</body>
+</html>

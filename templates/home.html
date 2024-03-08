@@ -1,0 +1,239 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Images</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      background-image: url("{% static 'images/l-b.jpg' %}");
+      background-repeat: no-repeat; /* Ensure background image is not repeated */
+      background-size: cover; /* Cover the entire background */
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .search-container {
+      margin-bottom: 20px;
+    }
+
+    .search-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-shadow: none;
+    }
+
+    .product-grid {
+      display: flex; /* Display items in a flex container */
+      flex-wrap: wrap; /* Wrap items to the next line when they exceed the container */
+      gap: 20px;
+    }
+
+    .product-item {
+      flex: 1; /* Equal width for all items */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background: none; /* Remove white background */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: calc(20% - 20px); /* Adjust the width to maintain 5 items per row */
+      cursor: pointer; /* Add pointer cursor to indicate clickable */
+    }
+
+    .product-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-item img {
+      max-width: 100%; /* Ensure images maintain aspect ratio */
+      height: 200px; /* Set a fixed height for all images */
+      object-fit: cover; /* Cover the entire space */
+      border-radius: 8px;
+    }
+
+    .product-item h3 {
+      font-size: 18px;
+      margin-top: 10px;
+      /* Display product names inline */
+      display: inline;
+    }
+
+    /* CSS for the navigation bar */
+    nav {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 20px;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    .modal-content {
+      margin: 10% auto;
+      padding: 20px;
+      background-color: #fefefe;
+      border-radius: 8px;
+      max-width: 80%;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <ul>
+    <li><a href="{% url 'Homepage' %}">LOGIN(here)</a></li>
+     <li><a href="service">Services</a></li>
+    <li><a href="About">About</a></li>
+    <!-- Add more navigation links here if needed -->
+  </ul>
+</nav>
+
+<div class="container">
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search products...">
+  </div>
+
+  <div class="product-grid" id="productGrid">
+    <div class="product-item" data-collection="Chairs" data-images="{% static 'images/chair.jpg' %},{% static 'images/chair2.jpg' %}">
+      <a href="{% url 'design' %}">
+        <img src="{% static 'images/chair.jpg' %}">
+      </a>
+      <h3>Chair</h3>
+    </div>
+    <div class="product-item" data-collection="Bathtubs" data-images="{% static 'images/bathtub1.jpg' %},{% static 'images/bathtub2.jpg' %}">
+      <a href="{% url 'design' %}">
+        <img src="{% static 'images/bathtub.jpg' %}">
+      </a>
+      <h3>Bathtub</h3>
+    </div>
+    <div class="product-item" data-collection="TVs" data-images="{% static 'images/tv1.jpg' %},{% static 'images/tv2.jpg' %}">
+      <a href="{% url 'design' %}">
+        <img src="{% static 'images/tv.jpg' %}">
+      </a>
+      <h3>TV</h3>
+    </div>
+    <div class="product-item" data-collection="Tools" data-images="{% static 'images/hammer1.jpg' %},{% static 'images/hammer2.jpg' %}">
+      <a href="{% url 'design' %}">
+        <img src="{% static 'images/hammer.jpg' %}">
+      </a>
+      <h3>Hammer</h3>
+    </div>
+    <div class="product-item" data-collection="Tools" data-images="{% static 'images/pliers1.jpg' %},{% static 'images/pliers2.jpg' %}">
+      <a href="{% url 'design' %}">
+        <img src="{% static 'images/pliers.jpg' %}">
+      </a>
+      <h3>Pliers</h3>
+    </div>
+    <!-- Add more product items as needed -->
+  </div>
+</div>
+
+<div id="productDetailModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div id="productDetailContent"></div>
+  </div>
+</div>
+
+<script>
+  const productItems = document.querySelectorAll(".product-item");
+  const modal = document.getElementById("productDetailModal");
+  const modalContent = document.getElementById("productDetailContent");
+
+  productItems.forEach(item => {
+    item.addEventListener("click", function() {
+      const images = this.getAttribute("data-images").split(",");
+      modalContent.innerHTML = "";
+      images.forEach(image => {
+        const imgElement = document.createElement("img");
+        imgElement.src = image;
+        modalContent.appendChild(imgElement);
+      });
+      modal.style.display = "block";
+    });
+  });
+
+  const closeModal = document.querySelector(".close");
+  closeModal.addEventListener("click", function() {
+    modal.style.display = "none";
+  });
+
+  document.getElementById("searchInput").addEventListener("keyup", function() {
+    const searchValue = this.value.toLowerCase();
+    productItems.forEach(item => {
+      const productName = item.querySelector("h3").textContent.toLowerCase();
+      if (productName.includes(searchValue)) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  });
+
+</script>
+
+</body>
+</html>

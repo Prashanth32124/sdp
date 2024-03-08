@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .service {
+      width: 80%;
+      margin: auto;
+      padding: 20px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .service h2 {
+      color: #333;
+    }
+
+    .service p {
+      color: #666;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+
+          /* CSS for the navigation bar */
+    nav {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 20px;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="{% url 'home' %}">Home</a></li>
+  </ul>
+</nav>
+<header>
+  <h1>Our Services</h1>
+</header>
+
+<div class="service">
+  <h2>Service 1</h2>
+  <p> Thank you for selecting products from our website! We appreciate your patronage.</p>
+   <p> You can collect the products by visiting our company in person and pay the bill with cash. </p>
+</div>
+
+<div class="service">
+  <h2>Service 2</h2>
+  <p>Thank you for selecting products from our website! We appreciate your patronage.</p>
+  <p>We also provide delivery services if you prefer to have the products delivered to your address. </p>
+  <p> CHARGES MAY APPLY</p>
+</div>
+
+
+
+<footer>
+  <p>&copy; 2024 Your Website. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

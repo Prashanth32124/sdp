@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Planner - Login</title>
+    <style>
+        /* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("{% static 'images/h-b.jpg' %}");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Background color with opacity */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: #dc3545;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .signin-option {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .signin-option button {
+            background-color: #007bff;
+        }
+
+        .signin-option button:hover {
+            background-color: #0056b3;
+        }
+
+        .signup-option {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .signup-option button {
+            background-color: #007bff;
+        }
+
+        .signup-option button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome to Room Planner</h1>
+
+    <!-- Signin form -->
+    <form id="loginForm" action="design" method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Login</button>
+        <div class="error-message" id="loginErrorMessage"></div>
+    </form>
+
+    <!-- Signup form -->
+    <div class="signup-option" id="signupOption">
+        <button id="signupBtn">Sign Up</button>
+    </div>
+    <form id="signupForm" action="#" method="post" style="display: none;">
+        {% csrf_token %}
+        <label for="newUsername">Username:</label>
+        <input type="text" id="newUsername" name="newUsername" required>
+
+        <label for="newPassword">Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+        <button type="button" onclick="signup()">Sign Up</button>
+        <div class="error-message" id="signupErrorMessage"></div>
+    </form>
+</div>
+
+<script>
+    function signup() {
+        var newUsername = document.getElementById("newUsername").value;
+        var newPassword = document.getElementById("newPassword").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+
+        // Validate password match
+        if (newPassword !== confirmPassword) {
+            document.getElementById("signupErrorMessage").innerText = "Passwords do not match.";
+            return;
+        }
+
+        // Perform signup
+        // Add your signup logic here, for now just show signin form
+        document.getElementById("signupForm").style.display = "none";
+        document.getElementById("signupOption").style.display = "none";
+        document.getElementById("loginForm").style.display = "block";
+    }
+
+    document.getElementById("signupBtn").addEventListener("click", function() {
+        document.getElementById("signupForm").style.display = "block";
+        document.getElementById("loginForm").style.display = "none";
+        document.getElementById("signupOption").style.display = "none";
+    });
+</script>
+
+</body>
+</html>

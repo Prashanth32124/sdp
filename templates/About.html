@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <nav>
+  <ul>
+    <li><a href="{% url 'home' %}">Home</a></li>
+  </ul>
+</nav>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #444;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        .product {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .product-item {
+            flex-basis: 30%;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>About Us</h1>
+        <p>Welcome to our website! Here's a little bit about who we are.</p>
+
+        <div class="content">
+            <h2>Our Mission</h2>
+            <p>Our mission is to provide high-quality interior design solutions tailored to our clients' needs and preferences. We strive to create spaces that are not only beautiful but also functional and practical.</p>
+
+            <h2>Why Choose Us?</h2>
+            <p>With years of experience in the industry, our team of designers has the expertise and creativity to transform any space into a stunning masterpiece. We work closely with our clients to understand their vision and bring it to life.</p>
+
+            <p>Whether you're looking to redesign your living room, bedroom, kitchen, or any other space, we've got you covered. From concept development to final execution, we handle every aspect of the design process with professionalism and attention to detail.</p>
+
+            <h2>Our Services</h2>
+            <p>We offer a wide range of services, including:</p>
+            <ul>
+                <li>Interior Design Consultation</li>
+                <li>Space Planning</li>
+                <li>Furniture Selection</li>
+                <li>Color Consultation</li>
+                <li>Home Staging</li>
+                <li>And much more...</li>
+            </ul>
+
+            <h2>Shop Furniture and Accessories</h2>
+            <p>Browse our extensive collection of furniture and accessories to find the perfect pieces for your home. From sofas and coffee tables to lamps and decorative items, we offer everything you need to complete your room design. Take a look at some of our products:</p>
+
+            <div class="product">
+                <div class="product-item">
+                    <img src="{% static 'images/chair.jpg' %}" alt="Chair">
+                    <h3>Chair</h3>
+                    <p>$99.99</p>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'images/sofa.jpg' %}" alt="Sofa">
+                    <h3>Sofa</h3>
+                    <p>$499.99</p>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'images/table.jpg' %}" alt="Table">
+                    <h3>Table</h3>
+                    <p>$199.99</p>
+                </div>
+            </div>
+            <!-- Add more products as needed -->
+        </div>
+    </div>
+</body>
+</html>
